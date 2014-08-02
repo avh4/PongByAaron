@@ -19,6 +19,15 @@ public class PongGame extends JComponent implements ActionListener,
     private int level = 1;
     private Color sky = new Color(178, 223, 224);
     private int timeInLevel = 0;
+    private String[] levelNames = {
+            "Trial by fire",
+            "Into the jungle",
+            "Hope returns",
+            "Skyward!",
+            "Hall of the Mountain King",
+            "Beyond the veil",
+            "..."
+    };
 
     public static void main(String[] args) {
         JFrame window = new JFrame("Pong Game by Aaron");
@@ -45,13 +54,20 @@ public class PongGame extends JComponent implements ActionListener,
         g.setColor(sky);
         g.fillRect(0, 0, 800, 600);
 
-        // draw the level name
+        // draw the level number
         int alpha = 255 - timeInLevel;
         g.setColor(new Color(151, 33, 34, Math.max(0, alpha)));
         g.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 80));
         String levelMessage = "LEVEL " + level;
         int textWidth = g.getFontMetrics().stringWidth(levelMessage);
         g.drawString(levelMessage, (800 - textWidth) / 2, 232);
+        // draw the level name
+        if (level <= 7) {
+            g.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 45));
+            String levelName = levelNames[level - 1];
+            int levelNameWidth = g.getFontMetrics().stringWidth(levelName);
+            g.drawString(levelName, (800 - levelNameWidth) / 2, 300);
+        }
 
         // draw the paddle
         g.setColor(new Color(110, 61, 23));
