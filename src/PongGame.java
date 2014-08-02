@@ -10,6 +10,7 @@ public class PongGame extends JComponent implements ActionListener,
     private int paddleX = 0;
     private int ballYSpeed = 7;
     private int ballXSpeed = 5;
+    private int hits = 0;
 
     public static void main(String[] args) {
         JFrame window = new JFrame("Pong Game by Aaron");
@@ -43,6 +44,11 @@ public class PongGame extends JComponent implements ActionListener,
         // draw the ball
         g.setColor(new Color(155, 93, 169));
         g.fillOval(ballX, ballY, 30, 30);
+
+        // draw the hit count
+        g.setColor(new Color(151, 33, 34));
+        g.setFont(new Font(Font.SERIF, Font.PLAIN, 50));
+        g.drawString("Hits: " + hits, 321, 560);
     }
 
     @Override
@@ -54,6 +60,7 @@ public class PongGame extends JComponent implements ActionListener,
                 && ballY + 30 >= 510
                 && ballY <= 510 + 15) {
             ballYSpeed = -7;
+            hits = hits + 1;
         }
         if (ballX >= 800 - 30) {
             ballXSpeed = -5;
