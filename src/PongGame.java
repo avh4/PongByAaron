@@ -8,9 +8,9 @@ import java.awt.event.MouseMotionListener;
 public class PongGame extends JComponent implements ActionListener,
         MouseMotionListener {
 
-    private int paddleX = 0;
     private int levelSpeedX = 3;
     private int levelSpeedY = 2;
+    private Paddle paddle = new Paddle();
     private Ball ball = new Ball(levelSpeedX, levelSpeedY);
     private int hits = 0;
     private int level = 1;
@@ -49,7 +49,7 @@ public class PongGame extends JComponent implements ActionListener,
     protected void paintComponent(Graphics g) {
         drawSky(g);
         drawLevelInfo(g);
-        drawPaddle(g);
+        paddle.draw(g);
         ball.draw(g);
         drawScoreboard(g);
     }
@@ -58,11 +58,6 @@ public class PongGame extends JComponent implements ActionListener,
         g.setColor(new Color(151, 33, 34));
         g.setFont(new Font(Font.SERIF, Font.PLAIN, 50));
         g.drawString("Hits: " + hits, 321, 560);
-    }
-
-    private void drawPaddle(Graphics g) {
-        g.setColor(new Color(110, 61, 23));
-        g.fillRect(paddleX, 510, 150, 15);
     }
 
     private void drawLevelInfo(Graphics g) {
@@ -91,8 +86,8 @@ public class PongGame extends JComponent implements ActionListener,
         timeInLevel = timeInLevel + 1;
         ball.x = ball.x + ball.xSpeed;
         ball.y = ball.y + ball.ySpeed;
-        if (ball.x + 30 >= paddleX
-                && ball.x <= paddleX + 150
+        if (ball.x + 30 >= paddle.x
+                && ball.x <= paddle.x + 150
                 && ball.y + 30 >= 510
                 && ball.y <= 510 + 15) {
             ball.ySpeed = -levelSpeedY;
@@ -124,7 +119,7 @@ public class PongGame extends JComponent implements ActionListener,
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        paddleX = e.getX() - 75;
+        paddle.x = e.getX() - 75;
         repaint();
     }
 }
