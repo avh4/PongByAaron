@@ -50,11 +50,30 @@ public class PongGame extends JComponent implements ActionListener,
 
     @Override
     protected void paintComponent(Graphics g) {
-        // draw the sky
-        g.setColor(sky);
-        g.fillRect(0, 0, 800, 600);
+        drawSky(g);
+        drawLevelInfo(g);
+        drawPaddle(g);
+        drawBall(g);
+        drawScoreboard(g);
+    }
 
-        // draw the level number
+    private void drawScoreboard(Graphics g) {
+        g.setColor(new Color(151, 33, 34));
+        g.setFont(new Font(Font.SERIF, Font.PLAIN, 50));
+        g.drawString("Hits: " + hits, 321, 560);
+    }
+
+    private void drawBall(Graphics g) {
+        g.setColor(new Color(155, 93, 169));
+        g.fillOval(ballX, ballY, 30, 30);
+    }
+
+    private void drawPaddle(Graphics g) {
+        g.setColor(new Color(110, 61, 23));
+        g.fillRect(paddleX, 510, 150, 15);
+    }
+
+    private void drawLevelInfo(Graphics g) {
         int alpha = 255 - timeInLevel;
         g.setColor(new Color(151, 33, 34, Math.max(0, alpha)));
         g.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 80));
@@ -68,19 +87,11 @@ public class PongGame extends JComponent implements ActionListener,
             int levelNameWidth = g.getFontMetrics().stringWidth(levelName);
             g.drawString(levelName, (800 - levelNameWidth) / 2, 300);
         }
+    }
 
-        // draw the paddle
-        g.setColor(new Color(110, 61, 23));
-        g.fillRect(paddleX, 510, 150, 15);
-
-        // draw the ball
-        g.setColor(new Color(155, 93, 169));
-        g.fillOval(ballX, ballY, 30, 30);
-
-        // draw the hit count
-        g.setColor(new Color(151, 33, 34));
-        g.setFont(new Font(Font.SERIF, Font.PLAIN, 50));
-        g.drawString("Hits: " + hits, 321, 560);
+    private void drawSky(Graphics g) {
+        g.setColor(sky);
+        g.fillRect(0, 0, 800, 600);
     }
 
     @Override
