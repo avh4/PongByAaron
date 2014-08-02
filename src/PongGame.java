@@ -1,6 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 
 public class PongGame extends JComponent implements ActionListener,
         MouseMotionListener {
@@ -8,9 +11,12 @@ public class PongGame extends JComponent implements ActionListener,
     private int ballX = 400;
     private int ballY = 150;
     private int paddleX = 0;
-    private int ballYSpeed = 7;
-    private int ballXSpeed = 5;
+    private int levelSpeedX = 3;
+    private int levelSpeedY = 2;
+    private int ballYSpeed = levelSpeedX;
+    private int ballXSpeed = levelSpeedY;
     private int hits = 0;
+    private int level = 1;
 
     public static void main(String[] args) {
         JFrame window = new JFrame("Pong Game by Aaron");
@@ -21,7 +27,7 @@ public class PongGame extends JComponent implements ActionListener,
         window.setLocationRelativeTo(null);
         window.setVisible(true);
 
-        Timer t = new Timer(100, game);
+        Timer t = new Timer(20, game);
         t.start();
 
         window.addMouseMotionListener(game);
@@ -49,6 +55,9 @@ public class PongGame extends JComponent implements ActionListener,
         g.setColor(new Color(151, 33, 34));
         g.setFont(new Font(Font.SERIF, Font.PLAIN, 50));
         g.drawString("Hits: " + hits, 321, 560);
+
+        g.setFont(new Font(Font.SERIF, Font.PLAIN, 20));
+        g.drawString("Level: " + level, 321, 580);
     }
 
     @Override
@@ -59,17 +68,23 @@ public class PongGame extends JComponent implements ActionListener,
                 && ballX <= paddleX + 150
                 && ballY + 30 >= 510
                 && ballY <= 510 + 15) {
-            ballYSpeed = -7;
+            ballYSpeed = -levelSpeedY;
             hits = hits + 1;
+            if (hits >= 2) {
+                level = level + 1;
+                hits = 0;
+                levelSpeedX = levelSpeedX + 2;
+                levelSpeedY = levelSpeedY + 2;
+            }
         }
         if (ballX >= 800 - 30) {
-            ballXSpeed = -5;
+            ballXSpeed = -levelSpeedX;
         }
         if (ballX <= 0) {
-            ballXSpeed = 5;
+            ballXSpeed = levelSpeedX;
         }
         if (ballY <= 0) {
-            ballYSpeed = 7;
+            ballYSpeed = levelSpeedY;
         }
         repaint();
     }
