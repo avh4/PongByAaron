@@ -13,8 +13,8 @@ public class PongGame extends JComponent implements ActionListener,
     private int paddleX = 0;
     private int levelSpeedX = 3;
     private int levelSpeedY = 2;
-    private int ballYSpeed = levelSpeedX;
-    private int ballXSpeed = levelSpeedY;
+    private int ballXSpeed = levelSpeedX;
+    private int ballYSpeed = levelSpeedY;
     private int hits = 0;
     private int level = 1;
     private Color sky = new Color(178, 223, 224);
