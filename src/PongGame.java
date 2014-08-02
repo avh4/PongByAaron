@@ -17,6 +17,7 @@ public class PongGame extends JComponent implements ActionListener,
     private int ballXSpeed = levelSpeedY;
     private int hits = 0;
     private int level = 1;
+    private Color sky = new Color(178, 223, 224);
 
     public static void main(String[] args) {
         JFrame window = new JFrame("Pong Game by Aaron");
@@ -40,7 +41,7 @@ public class PongGame extends JComponent implements ActionListener,
     @Override
     protected void paintComponent(Graphics g) {
         // draw the sky
-        g.setColor(new Color(178, 223, 224));
+        g.setColor(sky);
         g.fillRect(0, 0, 800, 600);
 
         // draw the paddle
@@ -75,6 +76,7 @@ public class PongGame extends JComponent implements ActionListener,
                 hits = 0;
                 levelSpeedX = levelSpeedX + 2;
                 levelSpeedY = levelSpeedY + 2;
+                sky = sky.darker();
             }
         }
         if (ballX >= 800 - 30) {
