@@ -18,6 +18,7 @@ public class PongGame extends JComponent implements ActionListener,
     private int hits = 0;
     private int level = 1;
     private Color sky = new Color(178, 223, 224);
+    private int timeInLevel = 0;
 
     public static void main(String[] args) {
         JFrame window = new JFrame("Pong Game by Aaron");
@@ -44,6 +45,14 @@ public class PongGame extends JComponent implements ActionListener,
         g.setColor(sky);
         g.fillRect(0, 0, 800, 600);
 
+        // draw the level name
+        int alpha = 255 - timeInLevel;
+        g.setColor(new Color(151, 33, 34, Math.max(0, alpha)));
+        g.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 80));
+        String levelMessage = "LEVEL " + level;
+        int textWidth = g.getFontMetrics().stringWidth(levelMessage);
+        g.drawString(levelMessage, (800 - textWidth) / 2, 232);
+
         // draw the paddle
         g.setColor(new Color(110, 61, 23));
         g.fillRect(paddleX, 510, 150, 15);
@@ -56,13 +65,11 @@ public class PongGame extends JComponent implements ActionListener,
         g.setColor(new Color(151, 33, 34));
         g.setFont(new Font(Font.SERIF, Font.PLAIN, 50));
         g.drawString("Hits: " + hits, 321, 560);
-
-        g.setFont(new Font(Font.SERIF, Font.PLAIN, 20));
-        g.drawString("Level: " + level, 321, 580);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        timeInLevel = timeInLevel + 1;
         ballX = ballX + ballXSpeed;
         ballY = ballY + ballYSpeed;
         if (ballX + 30 >= paddleX
@@ -77,6 +84,7 @@ public class PongGame extends JComponent implements ActionListener,
                 levelSpeedX = levelSpeedX + 2;
                 levelSpeedY = levelSpeedY + 2;
                 sky = sky.darker();
+                timeInLevel = 0;
             }
         }
         if (ballX >= 800 - 30) {
