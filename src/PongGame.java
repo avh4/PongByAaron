@@ -13,6 +13,7 @@ public class PongGame extends JComponent implements ActionListener,
     private Paddle paddle = new Paddle();
     private Ball ball = new Ball(levelSpeedX, levelSpeedY);
     private int hits = 0;
+    private int score = 0;
     private int level = 1;
     private Color sky = new Color(178, 223, 224);
     private int timeInLevel = 0;
@@ -56,8 +57,9 @@ public class PongGame extends JComponent implements ActionListener,
 
     private void drawScoreboard(Graphics g) {
         g.setColor(new Color(151, 33, 34));
-        g.setFont(new Font(Font.SERIF, Font.PLAIN, 50));
+        g.setFont(new Font(Font.SERIF, Font.PLAIN, 30));
         g.drawString("Hits: " + hits, 321, 560);
+        g.drawString("Score: " + score, 321, 585);
     }
 
     private void drawLevelInfo(Graphics g) {
@@ -92,6 +94,7 @@ public class PongGame extends JComponent implements ActionListener,
                 && ball.y <= 510 + 15) {
             ball.ySpeed = -levelSpeedY;
             hits = hits + 1;
+            score = score + level;
             if (hits >= 2) {
                 level = level + 1;
                 hits = 0;
