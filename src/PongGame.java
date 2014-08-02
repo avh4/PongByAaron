@@ -87,7 +87,7 @@ public class PongGame extends JComponent implements ActionListener,
         ball.x = ball.x + ball.xSpeed;
         ball.y = ball.y + ball.ySpeed;
         if (ball.x + 30 >= paddle.x
-                && ball.x <= paddle.x + 150
+                && ball.x <= paddle.x + paddle.width
                 && ball.y + 30 >= 510
                 && ball.y <= 510 + 15) {
             ball.ySpeed = -levelSpeedY;
@@ -99,6 +99,7 @@ public class PongGame extends JComponent implements ActionListener,
                 levelSpeedY = levelSpeedY + 2;
                 sky = sky.darker();
                 timeInLevel = 0;
+                paddle.width = paddle.width - 10;
             }
         }
         if (ball.x >= 800 - 30) {
